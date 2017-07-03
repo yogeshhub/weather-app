@@ -1,40 +1,50 @@
-<section md-cols-gt-md="12">
-	<md-toolbar class="md-primary">
-		<div class="md-toolbar-tools">
-			<h3>Weather Forecasting</h3>	
-			<span flex class="flex"></span>
-			<md-button>Login</md-button>		
-		</div>
-	</md-toolbar>
-</section>
-<section layout-fill>
+<section layout-fill id="weatherPortion">
 	<md-content layout-fill flex class="md-padding page-content">
     <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect flex layout="column" layout-fill md-dynamic-height>
-      <md-tab ng-repeat="tab in wc.exampleLocations"
-              ng-disabled="tab.disabled"
-              label="{{tab.title}}">
-        <div class="demo-tab tab{{$index%4}}" style="padding: 25px; text-align: center;">          
+      <md-tab ng-repeat="place in wc.exampleLocations"              
+              label="{{place.name}}">
+        <div class="demo-tab" style="padding: 25px; text-align: center;">          
           <md-content class="md-padding" layout-xs="column" layout="row">
-		    <div flex-xs flex-gt-xs="50" layout="column" style="text-align: center;margin: 0 auto">
+		    <div flex-xs flex-gt-xs="40" layout="column" style="text-align: center;margin: 0 auto">
 		      <md-card md-theme="default" md-theme-watch>
 		        <md-card-title>
 		          <md-card-title-text>
-		            <span class="md-headline">Weather should be integerated</span>
-		            <span class="md-subhead">Large</span>
+		            <span class="md-headline">{{place.weather[0].main}}</span>
+		            <span class="md-subhead">{{place.weather[0].description}}</span>
+		            <span class="md-headline">Wind</span>
+		            <span class="md-subhead">Speed - {{place.wind.speed}}</span>
+		            <span class="md-subhead">Degree - {{place.wind.deg}}</span>
 		          </md-card-title-text>
 		          <md-card-title-media>
-		            <div class="md-media-lg card-media"></div>
+		            <div class="md-media-lg card-media">
+		            	<img ng-src="{{wc.getImageSrc(place.weather[0].icon)}}">
+		            </div>
 		          </md-card-title-media>
 		        </md-card-title>
-			        <!-- <md-card-actions layout="row" layout-align="end center">
-			          <md-button>Action 1</md-button>
-			          <md-button>Action 2</md-button>
-			        </md-card-actions> -->
-		      </md-card>
-		    </div>
+		        <md-card-actions layout="row" layout-align="start center">
+		          <span class="md-content"> Temp <md-button>{{place.main.temp}} &#8451;</md-button></span>
+		          <span class="md-content"> Pressure <md-button>{{place.main.pressure}}</md-button></span>
+		          <span class="md-content"> humidity <md-button>{{place.main.humidity}}</md-button></span>
+		          <span class="md-content"> Temp Max <md-button>{{place.main.temp_max}} &#8451;</md-button></span>
+		          <span class="md-content"> Temp Min <md-button>{{place.main.temp_min}} &#8451;</md-button></span>
+		        </md-card-actions>
+		      </md-card>		      
+		    </div>		    
 		    </md-content>
         </div>
       </md-tab>
-    </md-tabs>
+    </md-tabs>    
+  </md-content>
+  <md-content layout-gt-sm="column" layout-padding layout-align="center center">
+    <div>
+      <md-input-container>
+        <label>Place</label>
+        <input ng-model="wc.place">
+      </md-input-container>
+
+      <md-input-container>
+        <md-button class="md-raised md-warn" ng-click="wc.getEachWeather(wc.place)">Get Weather</md-button>
+      </md-input-container>
+    </div>
   </md-content>
 </section>
