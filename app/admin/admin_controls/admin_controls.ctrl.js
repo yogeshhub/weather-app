@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('weatherApp')
-	.controller('adminCtrl', [function() {
-
+	.controller('adminCtrl', [function($scope) {
+		var ac = this;
 	}]);

@@ -11,26 +11,63 @@ config(function($stateProvider, $urlRouterProvider){
 	$stateProvider
 		.state('admin', {
 			url: '/admin',
-			templateUrl: 'Admin/Weather/weather.html',
+			templateUrl: 'admin/weather/weather.html',
 			controller: 'weatherCtrl',
 			controllerAs: 'wc'
 		})
-		.state('admin.adminControls', {
-			url: 'admin/adminControls',
-			templateUrl: 'Admin/Weather/admin_controls.html',
+		.state('adminControls', {
+			url: '/adminControls',						
+			templateUrl: 'admin/admin_controls/admin_controls.html',
 			controller: 'adminCtrl',
 			controllerAs: 'ac'
 		})
 		.state('user', {
 			url: '/user',
-			templateUrl: 'Users/User/user.html',
+			templateUrl: 'users/user/user.html',
 			controller: 'userCtrl',
 			controllerAs: 'uc'			
 		})
-		.state('user.userDetails', {
-			url: 'user/userDetails',
-			templateUrl: 'Users/User/user_details.html',
+		.state('userDetails', {
+			url: 'userDetails',
+			templateUrl: 'users/user/user_details.html',
 			controller: 'userDetailsCtrl',
 			controllerAs: 'udc'
-		})
+		});			
+})
+.run(function($transitions, $state,$mdDialog, $rootScope){
+	$rootScope.checkLogin = function(){
+		if(sessionStorage.getItem('isLogged')){
+			return true;
+		} else {
+			return false;
+		}
+	}	
+	$rootScope.logout = function(){
+		sessionStorage.clear();
+		$state.go('admin');
+	}
+	$transitions.onBefore({ from: '*', to:'adminControls' }, function(trans) {		
+		if(!sessionStorage.getItem('isLogged')){
+			$mdDialog.show({
+		  		controller: ['$scope',function($scope){
+				  	$scope.getLogIn = function(user){
+				  		if(user){
+				  			sessionStorage.setItem('isLogged',true);
+				  			$mdDialog.hide();
+				  		}		  		
+				  	}
+			  	}],
+				templateUrl: 'login/login.html',
+				parent: angular.element(document.body),					  
+				clickOutsideToClose:false,
+				fullscreen: true // Only for -xs, -sm breakpoints.
+			})
+			.then(function() {
+				//$state.go('adminControls');
+			});
+		}		
+	});
+	$transitions.onExit({ from: 'adminControls' }, function(trans) {
+		$mdDialog.hide();		
+	});
 });

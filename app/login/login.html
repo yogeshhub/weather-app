@@ -1,0 +1,21 @@
+<md-dialog>
+<form ng-cloak>
+<md-content md-theme="docs-dark" layout-gt-sm="column" layout-padding>
+    <div>
+      <md-input-container>
+        <label>Name</label>
+        <input ng-model="user.name">
+      </md-input-container>
+
+      <md-input-container>
+        <label>Password</label>
+        <input ng-model="user.pwd" type="password">
+      </md-input-container>     
+
+      <md-input-container>
+      	<md-button class="md-raised md-accent" ng-click="getLogIn(user)">Sign In</md-button>
+      </md-input-container> 
+    </div>
+  </md-content>
+ </form>
+ </md-dialog>

@@ -14,12 +14,22 @@
   <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.css"></script>  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>  
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-
+  <section md-cols-gt-md="12">
+    <md-toolbar class="md-primary">
+      <div class="md-toolbar-tools">
+        <h3>Weather Forecasting</h3>
+        <span flex class="flex"></span>
+        <md-button ui-sref="adminControls" ng-if="!checkLogin()">Login</md-button> 
+        <md-button ng-click="logout()" ng-if="checkLogin()">Logout</md-button>   
+      </div>
+    </md-toolbar>
+  </section>
   <div ui-view></div>  
 
   <!-- In production use:
@@ -27,6 +37,7 @@
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.min.js"></script>
   <script src="bower_components/angular-animate/angular-animate.min.js"></script>  
   <script src="bower_components/angular-aria/angular-aria.min.js"></script>
   <script src="bower_components/angular-material/angular-material.min.js"></script>
